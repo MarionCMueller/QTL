@@ -1,1 +1,55 @@
 ### R script QTL mapping for AvrPm1a in Blumeria graminis ###
+
+####################
+#### libraries #####
+####################
+
+library(qtl)
+library(dplyr)
+library(ggplot2)
+require(gridExtra)
+
+####################
+##### Code #########
+####################
+
+Cross96XTH<-read.cross("csvs", dir="", genfile="GeneticMap_final_13052018.csv", phefile="Axminster_phenotypes_final.csv", genotype=c("A","B"), na.strings=c("U","NA"))
+Cross96XTH<-jittermap(Cross96XTH)
+Cross96XTHgen<-calc.genoprob(Cross96XTH)
+
+opermAxminsterNp<-scanone(Cross96XTHgen, pheno.col=2,method="hk", model="np",n.perm=1000)
+summary(opermAxminsterNp)
+scanoneAxminsterNp<-scanone(Cross96XTHgen, pheno.col=2, model="np")
+lodint(scanoneAxminsterNp,chr=6, expandtomarkers=TRUE)
+
+##################
+#### Plots #######
+##################
+
+scanoneAxminsterNp
+scanoneAxminsterNpch1<-scanoneAxminsterNp %>% filter(chr==1)
+scanoneAxminsterNpch2<-scanoneAxminsterNp %>% filter(chr==2)
+scanoneAxminsterNpch3<-scanoneAxminsterNp %>% filter(chr==3)
+scanoneAxminsterNpch4<-scanoneAxminsterNp %>% filter(chr==4)
+scanoneAxminsterNpch5<-scanoneAxminsterNp %>% filter(chr==5)
+scanoneAxminsterNpch6<-scanoneAxminsterNp %>% filter(chr==6)
+scanoneAxminsterNpch7<-scanoneAxminsterNp %>% filter(chr==7)
+scanoneAxminsterNpch8<-scanoneAxminsterNp %>% filter(chr==8)
+scanoneAxminsterNpch9<-scanoneAxminsterNp %>% filter(chr==9)
+scanoneAxminsterNpch10<-scanoneAxminsterNp %>% filter(chr==10)
+scanoneAxminsterNpch11<-scanoneAxminsterNp %>% filter(chr==11)
+
+plot1<-ggplot(scanoneAxminsterNpch1,aes(x=pos,y=lod,)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") 
+plot2<-ggplot(scanoneAxminsterNpch2,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.title.y=element_blank(),axis.ticks.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300,400))
+plot3<-ggplot(scanoneAxminsterNpch3,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.title.y=element_blank(),axis.ticks.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200))
+plot4<-ggplot(scanoneAxminsterNpch4,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.title.y=element_blank(),axis.ticks.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300)) 
+plot4
+plot5<-ggplot(scanoneAxminsterNpch5,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300,400,500))
+plot6<-ggplot(scanoneAxminsterNpch6,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300,400))
+plot7<-ggplot(scanoneAxminsterNpch7,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300,400,500))
+plot8<-ggplot(scanoneAxminsterNpch8,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300))
+plot9<-ggplot(scanoneAxminsterNpch9,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300,400,500))
+plot10<-ggplot(scanoneAxminsterNpch10,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.4)) +ylab("LOD") + scale_x_discrete(limits=c(0,100,200,300))
+plot11<-ggplot(scanoneAxminsterNpch11,aes(x=pos,y=lod)) + geom_line(size=0.4) + geom_hline(yintercept = 3.3, color="red", linetype=2, size=0.5) + theme_bw() + ylim(c(0,7)) + theme(text = element_text(size=10),axis.title.x=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank(),axis.title.y=element_blank(),plot.margin = unit(c(0.02, 0.065, 0, 0), "cm"),axis.text.x = element_text(angle = 90, vjust = 0.75)) +ylab("LOD") + scale_x_discrete(limits=c(0,75,150))
+plot11
+grid.arrange(arrangeGrob(plot1,plot2,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10,plot11, nrow=1,ncol=11, widths=c(4.5,5.5,2.5,3.5,5.5,4.0,5.0,4.5,5,3,1.6)))
